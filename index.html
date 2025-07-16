@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GPA Data For Power BI</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    body {
+      background: linear-gradient(135deg,#d4a0e3, #d981f1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 960px;
+      width: 100%;
+      padding: 1rem;
+    }
+    .slide {
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 1rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      padding: 1rem;
+      margin-bottom: 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .slide img {
+      max-width: 100%;
+      border-radius: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .slide-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      text-align: center;
+    }
+    .pagination {
+      display: flex;
+      gap: 0.5rem;
+      justify-content: center;
+      margin-top: 1rem;
+    }
+    .pagination button {
+      background: #ffffff;
+      border: 1px solid #ccc;
+      border-radius: 999px;
+      width: 12px;
+      height: 12px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .pagination button.active {
+      background: #7eedf1;
+      border-color: #4eb4b8;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div id="slides"></div>
+    <div class="pagination" id="pagination"></div>
+  </div>
+
+
+  <script>
+    const slidesData = [
+      { title: "GPA", image: "GPA1.jpg" },  //ใส่รูปภาพข้อมูล
+      { title: "Science", image: "GPA2.jpg" },  //ใส่รูปภาพข้อมูล
+      { title: "Math", image: "GPA3.jpg" },  //ใส่รูปภาพข้อมูล
+      { title: "Language", image: "GPA4.jpg" },  //ใส่รูปภาพข้อมูล
+      { title: "Social", image: "GPA5.jpg" },   //ใส่รูปภาพข้อมูล
+      { title: "Technology", image: "GPA6.jpg" },   //ใส่รูปภาพข้อมูล
+    ];
+
+
+    const slidesContainer = document.getElementById('slides');
+    const paginationContainer = document.getElementById('pagination');
+
+
+    let currentSlide = 0;
+
+
+    function renderSlide(index) {
+      slidesContainer.innerHTML = '';
+      const slide = document.createElement('div');
+      slide.className = 'slide';
+      slide.innerHTML = `
+        <img src="${slidesData[index].image}" alt="${slidesData[index].title}" />
+        <div class="slide-title">${slidesData[index].title}</div>
+      `;
+      slidesContainer.appendChild(slide);
+
+
+      document.querySelectorAll('.pagination button').forEach((btn, i) => {
+        btn.classList.toggle('active', i === index);
+      });
+    }
+
+
+    slidesData.forEach((_, i) => {
+      const btn = document.createElement('button');
+      btn.addEventListener('click', () => {
+        currentSlide = i;
+        renderSlide(currentSlide);
+      });
+      paginationContainer.appendChild(btn);
+    });
+
+
+    renderSlide(currentSlide);
+  </script>
+</body>
+</html>
